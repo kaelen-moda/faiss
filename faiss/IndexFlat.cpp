@@ -40,7 +40,7 @@ void IndexFlat::search(
     // we see the distances and labels as heaps
     if (metric_type == METRIC_INNER_PRODUCT) {
         std::time_t result = std::time(nullptr);
-        std::cout << std::asctime(std::localtime(&result)) <<  "inside index flat search metric inner product" << std::endl;
+        std::cout << result <<  "inside index flat search metric inner product" << std::endl;
         float_minheap_array_t res = {size_t(n), size_t(k), labels, distances};
         knn_inner_product(x, get_xb(), d, n, ntotal, &res, sel);
     } else if (metric_type == METRIC_L2) {

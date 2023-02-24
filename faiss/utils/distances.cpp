@@ -118,7 +118,7 @@ void exhaustive_inner_product_seq(
     int nt = std::min(int(nx), omp_get_max_threads());
 
     std::time_t result = std::time(nullptr);
-        std::cout << std::asctime(std::localtime(&result)) <<  "exhaustive inner product before assert" << std::endl;
+        std::cout << result <<  " exhaustive inner product before assert" << std::endl;
 
     FAISS_ASSERT(use_sel == (sel != nullptr));
 
@@ -619,7 +619,7 @@ void knn_inner_product(
         const IDSelector* sel) {
     int64_t imin = 0;
     std::time_t result = std::time(nullptr);
-    std::cout << std::asctime(std::localtime(&result)) <<  "knn inner product" << std::endl;
+    std::cout << result <<  "knn inner product" << std::endl;
     if (auto selr = dynamic_cast<const IDSelectorRange*>(sel)) {
         imin = std::max(selr->imin, int64_t(0));
         int64_t imax = std::min(selr->imax, int64_t(ny));
@@ -649,7 +649,7 @@ void knn_inner_product(
         RH res(nx, val, ids, k);
         if (sel) {
             std::time_t result = std::time(nullptr);
-        std::cout << std::asctime(std::localtime(&result)) <<  "knn else rrh" << std::endl;
+        std::cout << result <<  "knn else rrh" << std::endl;
             exhaustive_inner_product_seq<RH, true>(x, y, d, nx, ny, res, sel);
         } else if (nx < distance_compute_blas_threshold) {
             exhaustive_inner_product_seq(x, y, d, nx, ny, res, nullptr);
