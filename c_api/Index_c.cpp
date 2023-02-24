@@ -18,12 +18,12 @@ extern "C" {
 
 DEFINE_DESTRUCTOR(SearchParameters)
 
-int faiss_SearchParameters_new(FaissSearchParameters** p_sp, FaissIDSelector* sel) {
+int faiss_SearchParameters_new(FaissSearchParameters** p_sp, FaissIDSelector** sel) {
     try {
         faiss::SearchParameters* params = new faiss::SearchParameters;
-        std::cout << params << " allocated a new params object" << std::endl;
-        params->sel = reinterpret_cast<faiss::IDSelector*>(sel);
-        std::cout << params->sel << " assigned selector to the params object " << sel << std::endl;
+        std::cout << params << " HELLO allocated a new params object" << std::endl;
+        params->sel = reinterpret_cast<faiss::IDSelector*>(*sel);
+        std::cout << params->sel << " HELLO assigned selector to the params object " << sel << std::endl;
         *p_sp = reinterpret_cast<FaissSearchParameters*>(params);
         return 0;
     }
