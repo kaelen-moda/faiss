@@ -299,7 +299,9 @@ void IndexIVF::search(
     std::cout << result << " into ivf index search" << std::endl;
     //printf("into ivf index search\n");
     const IVFSearchParameters* params = nullptr;
+    std::cout << params_in << " params in before convert" << std::endl; 
     if (params_in) {
+        std::cout << params_in << " about to try to dynamic cast to IVFSearchParameters" << std::endl; 
         params = dynamic_cast<const IVFSearchParameters*>(params_in);
         FAISS_THROW_IF_NOT_MSG(params, "IndexIVF params have incorrect type");
     }
