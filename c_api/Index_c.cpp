@@ -12,6 +12,7 @@
 #include <faiss/Index.h>
 #include "macros_impl.h"
 #include <ctime>
+#include <iostream>
 
 extern "C" {
 

@@ -18,6 +18,7 @@
 #include <faiss/utils/utils.h>
 #include <cstring>
 #include <iostream>
+#include <ctime>
 
 namespace faiss {
 
