@@ -13,6 +13,7 @@
 #include "macros_impl.h"
 #include <ctime>
 #include <iostream>
+#include <faiss/impl/IDSelector.h>
 
 extern "C" {
 
@@ -93,6 +94,15 @@ int faiss_Index_search_with_params(
         float* distances,
         idx_t* labels) {
     try {
+        std::cout << "C trying to call search with params with fixed params" << std::endl;
+        faiss::SearchParameters fixedParams;
+        faiss::IDSelectorAll sel;
+        fixedParams.sel = &sel;
+        reinterpret_cast<const faiss::Index*>(index)->search(
+                n, x, k, distances, labels, &fixedParams);
+        std::cout << "C finished calling search with params with fixed params" << std::endl;
+
+
         std::time_t result = std::time(nullptr);
         std::cout << result << " C got into search with params" << std::endl;
         //printf("got into search with params\n");
