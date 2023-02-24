@@ -19,6 +19,7 @@
 #include <limits>
 #include <memory>
 #include <iostream>
+#include <ctime>
 
 #include <faiss/utils/hamming.h>
 #include <faiss/utils/utils.h>
@@ -302,8 +303,8 @@ void IndexIVF::search(
         params = dynamic_cast<const IVFSearchParameters*>(params_in);
         FAISS_THROW_IF_NOT_MSG(params, "IndexIVF params have incorrect type");
     }
-    std::time_t result = std::time(nullptr);
-    std::cout << std::asctime(std::localtime(&result)) << " converted ivf search parameters" << std::endl;
+    std::time_t result2 = std::time(nullptr);
+    std::cout << std::asctime(std::localtime(&result2)) << " converted ivf search parameters" << std::endl;
     //printf("converted ivf search parameters\n");
     const size_t nprobe =
             std::min(nlist, params ? params->nprobe : this->nprobe);
@@ -319,8 +320,8 @@ void IndexIVF::search(
         std::unique_ptr<idx_t[]> idx(new idx_t[n * nprobe]);
         std::unique_ptr<float[]> coarse_dis(new float[n * nprobe]);
 
-        std::time_t result = std::time(nullptr);
-        std::cout << std::asctime(std::localtime(&result)) << " inside ivf sub search" << std::endl;
+        std::time_t result3 = std::time(nullptr);
+        std::cout << std::asctime(std::localtime(&result3)) << " inside ivf sub search" << std::endl;
         //printf("inside ivf sub search \n");
         double t0 = getmillisecs();
         quantizer->search(

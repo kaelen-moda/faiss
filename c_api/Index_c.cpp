@@ -72,7 +72,7 @@ int faiss_Index_search(
         idx_t* labels) {
     try {
         std::cout << "got into search" << std::endl;
-        printf("got into search\n");
+        //printf("got into search\n");
         reinterpret_cast<const faiss::Index*>(index)->search(
                 n, x, k, distances, labels);
     }
@@ -93,11 +93,11 @@ int faiss_Index_search_with_params(
         //printf("got into search with params\n");
         reinterpret_cast<const faiss::Index*>(index)->search(n, x, k, distances, labels);
         //printf("able to call search normally inside with params\n");
-        std::time_t result = std::time(nullptr);
-        std::cout << std::asctime(std::localtime(&result)) << " able to call search normally inside with params" << std::endl;
+        std::time_t result2 = std::time(nullptr);
+        std::cout << std::asctime(std::localtime(&result2)) << " able to call search normally inside with params" << std::endl;
         reinterpret_cast<const faiss::SearchParameters*>(params);
-        std::time_t result = std::time(nullptr);
-        std::cout << std::asctime(std::localtime(&result)) <<  "able to cast params object successfully" << std::endl;
+        std::time_t result3 = std::time(nullptr);
+        std::cout << std::asctime(std::localtime(&result3)) <<  "able to cast params object successfully" << std::endl;
         //printf("able to cast params object successfully\n");
         reinterpret_cast<const faiss::Index*>(index)->search(
                 n, x, k, distances, labels, reinterpret_cast<const faiss::SearchParameters*>(params));

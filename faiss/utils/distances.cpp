@@ -14,6 +14,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <ctime>
 
 #include <omp.h>
 
@@ -114,6 +115,9 @@ void exhaustive_inner_product_seq(
         const IDSelector* sel = nullptr) {
     using SingleResultHandler = typename ResultHandler::SingleResultHandler;
     int nt = std::min(int(nx), omp_get_max_threads());
+
+    std::time_t result = std::time(nullptr);
+        std::cout << std::asctime(std::localtime(&result)) <<  "exhaustive inner product before assert" << std::endl;
 
     FAISS_ASSERT(use_sel == (sel != nullptr));
 
@@ -613,6 +617,8 @@ void knn_inner_product(
         int64_t* ids,
         const IDSelector* sel) {
     int64_t imin = 0;
+    std::time_t result = std::time(nullptr);
+    std::cout << std::asctime(std::localtime(&result)) <<  "knn inner product" << std::endl;
     if (auto selr = dynamic_cast<const IDSelectorRange*>(sel)) {
         imin = std::max(selr->imin, int64_t(0));
         int64_t imax = std::min(selr->imax, int64_t(ny));
@@ -629,6 +635,8 @@ void knn_inner_product(
         using RH = HeapResultHandler<CMin<float, int64_t>>;
         RH res(nx, val, ids, k);
         if (sel) {
+            std::time_t result2 = std::time(nullptr);
+        std::cout << std::asctime(std::localtime(&result2)) <<  "kkn if else k min_k_resevoir" << std::endl;
             exhaustive_inner_product_seq<RH, true>(x, y, d, nx, ny, res, sel);
         } else if (nx < distance_compute_blas_threshold) {
             exhaustive_inner_product_seq(x, y, d, nx, ny, res);
@@ -639,6 +647,8 @@ void knn_inner_product(
         using RH = ReservoirResultHandler<CMin<float, int64_t>>;
         RH res(nx, val, ids, k);
         if (sel) {
+            std::time_t result = std::time(nullptr);
+        std::cout << std::asctime(std::localtime(&result)) <<  "knn else rrh" << std::endl;
             exhaustive_inner_product_seq<RH, true>(x, y, d, nx, ny, res, sel);
         } else if (nx < distance_compute_blas_threshold) {
             exhaustive_inner_product_seq(x, y, d, nx, ny, res, nullptr);
