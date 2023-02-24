@@ -19,12 +19,17 @@ extern "C" {
 
 DEFINE_DESTRUCTOR(SearchParameters)
 
-int faiss_SearchParameters_new(FaissSearchParameters** p_sp, FaissIDSelector** sel) {
+int faiss_SearchParameters_new(FaissSearchParameters** p_sp, FaissIDSelector* sel) {
     try {
+        // faiss::SearchParameters params;
+        // params.sel = reinterpret_cast<faiss::IDSelector*>(sel);
+        // *p_sp = reinterpret_cast<FaissSearchParameters*>(params);
+        // return 0;
+
         faiss::SearchParameters* params = new faiss::SearchParameters;
         std::cout << params << " C allocated a new params object" << std::endl;
-        params->sel = reinterpret_cast<faiss::IDSelector*>(*sel);
-        std::cout << params->sel << " C assigned selector to the params object deferference input pointer *sel " << *sel << " input pointer to pointer sel " << sel << std::endl;
+        params->sel = reinterpret_cast<faiss::IDSelector*>(sel);
+        std::cout << params->sel << " C assigned selector to the params object deferference input pointer sel "  << sel << std::endl;
         *p_sp = reinterpret_cast<FaissSearchParameters*>(params);
         return 0;
     }
@@ -102,7 +107,6 @@ int faiss_Index_search_with_params(
         // reinterpret_cast<const faiss::Index*>(index)->search(
         //         n, x, k, distances, labels, &fixedParams);
         // std::cout << "C finished calling search with params with fixed params" << std::endl;
-
 
         std::time_t result = std::time(nullptr);
         std::cout << result << " C got into search with params" << std::endl;
