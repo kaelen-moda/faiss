@@ -309,6 +309,8 @@ void IndexIVFFastScan::search(
             !params, "search params not supported for this index");
     FAISS_THROW_IF_NOT(k > 0);
 
+    std::cout << "inside ivf fast scan search" << std::endl;
+
     DummyScaler scaler;
     if (metric_type == METRIC_L2) {
         search_dispatch_implem<true>(n, x, k, distances, labels, scaler);

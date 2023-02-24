@@ -42,6 +42,8 @@ void IndexBinaryFlat::search(
             !params, "search params not supported for this index");
     FAISS_THROW_IF_NOT(k > 0);
 
+    printf("into binary flat index search\n");
+
     const idx_t block_size = query_batch_size;
     for (idx_t s = 0; s < n; s += block_size) {
         idx_t nn = block_size;
