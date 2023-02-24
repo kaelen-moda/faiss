@@ -302,6 +302,7 @@ void IndexIVF::search(
     std::cout << params_in << " params in before convert" << std::endl; 
     if (params_in) {
         std::cout << params_in << " about to try to dynamic cast to IVFSearchParameters" << std::endl; 
+        std::cout << params_in->sel << " id selector in search params_in" << std::endl;
         std::cout << params_in->sel->is_member(10) << " trying to do an is member ceheck on selector" << std::endl;
         params = dynamic_cast<const IVFSearchParameters*>(params_in);
         std::cout << params << " cast complete to IVFSearchParameters" << std::endl; 
