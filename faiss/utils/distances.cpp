@@ -122,6 +122,9 @@ void exhaustive_inner_product_seq(
 
     FAISS_ASSERT(use_sel == (sel != nullptr));
 
+    std::time_t result2 = std::time(nullptr);
+        std::cout << result2 <<  " exhaustive inner product after assert" << std::endl;
+
 #pragma omp parallel num_threads(nt)
     {
         SingleResultHandler resi(res);
@@ -133,6 +136,7 @@ void exhaustive_inner_product_seq(
             resi.begin(i);
 
             for (size_t j = 0; j < ny; j++, y_j += d) {
+                std::cout << use_sel << " use sel inside omp for" << std::endl;
                 if (use_sel && !sel->is_member(j)) {
                     continue;
                 }
@@ -621,6 +625,8 @@ void knn_inner_product(
     std::time_t result = std::time(nullptr);
     std::cout << result <<  "knn inner product" << std::endl;
     if (auto selr = dynamic_cast<const IDSelectorRange*>(sel)) {
+        std::time_t result2 = std::time(nullptr);
+        std::cout << result2 <<  "knn id selector range" << std::endl;
         imin = std::max(selr->imin, int64_t(0));
         int64_t imax = std::min(selr->imax, int64_t(ny));
         ny = imax - imin;
@@ -628,6 +634,8 @@ void knn_inner_product(
         sel = nullptr;
     }
     if (auto sela = dynamic_cast<const IDSelectorArray*>(sel)) {
+        std::time_t result2 = std::time(nullptr);
+        std::cout << result2 <<  "knn id selector array" << std::endl;
         knn_inner_products_by_idx(
                 x, y, sela->ids, d, nx, sela->n, k, val, ids, 0);
         return;
@@ -637,7 +645,7 @@ void knn_inner_product(
         RH res(nx, val, ids, k);
         if (sel) {
             std::time_t result2 = std::time(nullptr);
-        std::cout << std::asctime(std::localtime(&result2)) <<  "kkn if else k min_k_resevoir" << std::endl;
+        std::cout << result2 <<  "kkn if else k min_k_resevoir" << std::endl;
             exhaustive_inner_product_seq<RH, true>(x, y, d, nx, ny, res, sel);
         } else if (nx < distance_compute_blas_threshold) {
             exhaustive_inner_product_seq(x, y, d, nx, ny, res);
@@ -647,13 +655,19 @@ void knn_inner_product(
     } else {
         using RH = ReservoirResultHandler<CMin<float, int64_t>>;
         RH res(nx, val, ids, k);
-        if (sel) {
-            std::time_t result = std::time(nullptr);
+        std::time_t result = std::time(nullptr);
         std::cout << result <<  "knn else rrh" << std::endl;
+        if (sel) {
+            std::time_t result4 = std::time(nullptr);
+        std::cout << result4 <<  "knn else rrh if sel" << std::endl;
             exhaustive_inner_product_seq<RH, true>(x, y, d, nx, ny, res, sel);
         } else if (nx < distance_compute_blas_threshold) {
+            std::time_t result4 = std::time(nullptr);
+        std::cout << result4 <<  "knn else if else nx < distance rrh" << std::endl;
             exhaustive_inner_product_seq(x, y, d, nx, ny, res, nullptr);
         } else {
+            std::time_t result4 = std::time(nullptr);
+        std::cout << result4 <<  "knn else rrh" << std::endl;
             exhaustive_inner_product_blas(x, y, d, nx, ny, res);
         }
     }
