@@ -16,6 +16,8 @@
 
 extern "C" {
 
+DEFINE_DESTRUCTOR(SearchParameters)
+
 int faiss_SearchParameters_new(FaissSearchParameters** p_sp, FaissIDSelector* sel) {
     try {
         faiss::SearchParameters params;
