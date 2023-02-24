@@ -295,14 +295,14 @@ void IndexIVF::search(
         const SearchParameters* params_in) const {
     FAISS_THROW_IF_NOT(k > 0);
     std::cout << "into ivf index search" << std::endl;
-    printf("into ivf index search\n");
+    //printf("into ivf index search\n");
     const IVFSearchParameters* params = nullptr;
     if (params_in) {
         params = dynamic_cast<const IVFSearchParameters*>(params_in);
         FAISS_THROW_IF_NOT_MSG(params, "IndexIVF params have incorrect type");
     }
     std::cout << "converted ivf search parameters" << std::endl;
-    printf("converted ivf search parameters\n");
+    //printf("converted ivf search parameters\n");
     const size_t nprobe =
             std::min(nlist, params ? params->nprobe : this->nprobe);
     FAISS_THROW_IF_NOT(nprobe > 0);
@@ -318,7 +318,7 @@ void IndexIVF::search(
         std::unique_ptr<float[]> coarse_dis(new float[n * nprobe]);
 
         std::cout << "inside ivf sub search" << std::endl;
-        printf("inside ivf sub search \n");
+        //printf("inside ivf sub search \n");
         double t0 = getmillisecs();
         quantizer->search(
                 n,
