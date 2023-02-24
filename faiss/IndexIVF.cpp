@@ -296,20 +296,20 @@ void IndexIVF::search(
         const SearchParameters* params_in) const {
     FAISS_THROW_IF_NOT(k > 0);
     std::time_t result = std::time(nullptr);
-    std::cout << result << " into ivf index search" << std::endl;
+    std::cout << result << " CPP into ivf index search" << std::endl;
     //printf("into ivf index search\n");
     const IVFSearchParameters* params = nullptr;
-    std::cout << params_in << " params in before convert" << std::endl; 
+    std::cout << params_in << " CPP params in before convert" << std::endl; 
     if (params_in) {
-        std::cout << params_in << " about to try to dynamic cast to IVFSearchParameters" << std::endl; 
-        std::cout << params_in->sel << " id selector in search params_in" << std::endl;
-        std::cout << params_in->sel->is_member(10) << " trying to do an is member ceheck on selector" << std::endl;
+        std::cout << params_in << " CPP about to try to dynamic cast to IVFSearchParameters" << std::endl; 
+        std::cout << params_in->sel << " CPP id selector in search params_in" << std::endl;
+        std::cout << params_in->sel->is_member(10) << " CPP trying to do an is member ceheck on selector" << std::endl;
         params = dynamic_cast<const IVFSearchParameters*>(params_in);
-        std::cout << params << " cast complete to IVFSearchParameters" << std::endl; 
+        std::cout << params << " CPP cast complete to IVFSearchParameters" << std::endl; 
         FAISS_THROW_IF_NOT_MSG(params, "IndexIVF params have incorrect type");
     }
     std::time_t result2 = std::time(nullptr);
-    std::cout << result2 << " converted ivf search parameters" << std::endl;
+    std::cout << result2 << " CPP converted ivf search parameters" << std::endl;
     //printf("converted ivf search parameters\n");
     const size_t nprobe =
             std::min(nlist, params ? params->nprobe : this->nprobe);

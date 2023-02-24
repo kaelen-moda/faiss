@@ -21,9 +21,9 @@ DEFINE_DESTRUCTOR(SearchParameters)
 int faiss_SearchParameters_new(FaissSearchParameters** p_sp, FaissIDSelector** sel) {
     try {
         faiss::SearchParameters* params = new faiss::SearchParameters;
-        std::cout << params << " HELLO allocated a new params object" << std::endl;
+        std::cout << params << " C allocated a new params object" << std::endl;
         params->sel = reinterpret_cast<faiss::IDSelector*>(*sel);
-        std::cout << params->sel << " HELLO assigned selector to the params object " << sel << std::endl;
+        std::cout << params->sel << " C assigned selector to the params object deferference input pointer *sel " << *sel << " input pointer to pointer sel " << sel << std::endl;
         *p_sp = reinterpret_cast<FaissSearchParameters*>(params);
         return 0;
     }
@@ -94,18 +94,18 @@ int faiss_Index_search_with_params(
         idx_t* labels) {
     try {
         std::time_t result = std::time(nullptr);
-        std::cout << result << " got into search with params" << std::endl;
+        std::cout << result << " C got into search with params" << std::endl;
         //printf("got into search with params\n");
         // reinterpret_cast<const faiss::Index*>(index)->search(n, x, k, distances, labels);
         //printf("able to call search normally inside with params\n");
         std::time_t result2 = std::time(nullptr);
-        std::cout << result2 << " able to call search normally inside with params" << std::endl;
+        std::cout << result2 << " C able to call search normally inside with params" << std::endl;
         reinterpret_cast<const faiss::SearchParameters*>(params);
         std::time_t result3 = std::time(nullptr);
-        std::cout << result3 <<  " able to compile cast params object successfully" << std::endl;
+        std::cout << result3 <<  " C able to compile cast params object successfully" << std::endl;
         //printf("able to cast params object successfully\n");
 
-        std::cout << params << " is the params object we have and are gonna send down" << std::endl;
+        std::cout << params << " C is the params object we have and are gonna send down" << std::endl;
 //        std::cout << params->sel << " is the params object selector we have and are gonna send" << std::endl;
         reinterpret_cast<const faiss::Index*>(index)->search(
                 n, x, k, distances, labels, reinterpret_cast<const faiss::SearchParameters*>(params));
