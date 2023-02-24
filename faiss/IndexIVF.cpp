@@ -294,14 +294,16 @@ void IndexIVF::search(
         idx_t* labels,
         const SearchParameters* params_in) const {
     FAISS_THROW_IF_NOT(k > 0);
-    std::cout << "into ivf index search" << std::endl;
+    std::time_t result = std::time(nullptr);
+    std::cout << std::asctime(std::localtime(&result)) << " into ivf index search" << std::endl;
     //printf("into ivf index search\n");
     const IVFSearchParameters* params = nullptr;
     if (params_in) {
         params = dynamic_cast<const IVFSearchParameters*>(params_in);
         FAISS_THROW_IF_NOT_MSG(params, "IndexIVF params have incorrect type");
     }
-    std::cout << "converted ivf search parameters" << std::endl;
+    std::time_t result = std::time(nullptr);
+    std::cout << std::asctime(std::localtime(&result)) << " converted ivf search parameters" << std::endl;
     //printf("converted ivf search parameters\n");
     const size_t nprobe =
             std::min(nlist, params ? params->nprobe : this->nprobe);
@@ -317,7 +319,8 @@ void IndexIVF::search(
         std::unique_ptr<idx_t[]> idx(new idx_t[n * nprobe]);
         std::unique_ptr<float[]> coarse_dis(new float[n * nprobe]);
 
-        std::cout << "inside ivf sub search" << std::endl;
+        std::time_t result = std::time(nullptr);
+        std::cout << std::asctime(std::localtime(&result)) << " inside ivf sub search" << std::endl;
         //printf("inside ivf sub search \n");
         double t0 = getmillisecs();
         quantizer->search(
